@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authUserRepository = exports.activityLogRepository = exports.roleRepository = void 0;
+const data_source_1 = require("../../database/data-source");
+const activity_log_entity_1 = require("./activity-log.entity");
+const auth_entity_1 = require("./auth.entity");
+const user_entity_1 = require("../users/user.entity");
+exports.roleRepository = data_source_1.AppDataSource.getRepository(auth_entity_1.Role);
+exports.activityLogRepository = data_source_1.AppDataSource.getRepository(activity_log_entity_1.ActivityLog);
+exports.authUserRepository = data_source_1.AppDataSource.getRepository(user_entity_1.User);

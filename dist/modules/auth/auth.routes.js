@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../../core/middlewares/auth.middleware");
+const guest_middleware_1 = require("../../core/middlewares/guest.middleware");
+const async_handler_1 = require("../../core/utils/async-handler");
+const validate_1 = require("../../core/utils/validate");
+const auth_controller_1 = require("./auth.controller");
+const auth_dto_1 = require("./auth.dto");
+const router = (0, express_1.Router)();
+router.post("/register", guest_middleware_1.guestOnlyMiddleware, (0, validate_1.validate)(auth_dto_1.registerSchema), (0, async_handler_1.asyncHandler)(auth_controller_1.authController.register));
+router.post("/verify-email", (0, validate_1.validate)(auth_dto_1.verifyEmailSchema), (0, async_handler_1.asyncHandler)(auth_controller_1.authController.verifyEmail));
+router.post("/resend-verification", (0, validate_1.validate)(auth_dto_1.resendVerificationSchema), (0, async_handler_1.asyncHandler)(auth_controller_1.authController.resendVerification));
+router.post("/login", guest_middleware_1.guestOnlyMiddleware, (0, validate_1.validate)(auth_dto_1.loginSchema), (0, async_handler_1.asyncHandler)(auth_controller_1.authController.login));
+router.post("/logout", auth_middleware_1.authMiddleware, (0, async_handler_1.asyncHandler)(auth_controller_1.authController.logout));
+router.get("/logout", auth_middleware_1.authMiddleware, (0, async_handler_1.asyncHandler)(auth_controller_1.authController.logout));
+exports.default = router;

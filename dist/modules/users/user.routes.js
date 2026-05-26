@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const roles_constant_1 = require("../../constants/roles.constant");
+const auth_middleware_1 = require("../../core/middlewares/auth.middleware");
+const rbac_middleware_1 = require("../../core/middlewares/rbac.middleware");
+const async_handler_1 = require("../../core/utils/async-handler");
+const validate_1 = require("../../core/utils/validate");
+const user_dto_1 = require("./user.dto");
+const user_controller_1 = require("./user.controller");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authMiddleware, (0, rbac_middleware_1.rbacMiddleware)(roles_constant_1.RoleName.ADMIN));
+router.get("/", (0, async_handler_1.asyncHandler)(user_controller_1.userController.findAll));
+router.get("/:id", (0, async_handler_1.asyncHandler)(user_controller_1.userController.findById));
+router.post("/", (0, validate_1.validate)(user_dto_1.createUserSchema), (0, async_handler_1.asyncHandler)(user_controller_1.userController.create));
+router.patch("/:id", (0, validate_1.validate)(user_dto_1.updateUserSchema), (0, async_handler_1.asyncHandler)(user_controller_1.userController.update));
+router.delete("/:id", (0, async_handler_1.asyncHandler)(user_controller_1.userController.remove));
+exports.default = router;
