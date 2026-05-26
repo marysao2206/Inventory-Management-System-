@@ -1,24 +1,43 @@
-import dotenv from 'dotenv';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import dotenv from "dotenv";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const projectRoot = path.resolve(__dirname, '..', '..');
+dotenv.config();
 
-dotenv.config({ path: path.join(projectRoot, '.env') });
-dotenv.config({ path: path.join(projectRoot, 'src', '.env'), override: false });
+const toNumber = (value: string | undefined, fallback: number): number => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const toBoolean = (value: string | undefined, fallback = false): boolean => {
+  if (value === undefined) return fallback;
+  return ["true", "1", "yes"].includes(value.toLowerCase());
+};
 
 export const env = {
-  port: Number(process.env.PORT) || 5000,
-
+  nodeEnv: process.env.NODE_ENV ?? "development",
+  port: toNumber(process.env.PORT, 3000),
+  apiPrefix: process.env.API_PREFIX ?? "/api/v1",
   db: {
-    host: process.env.DB_HOST || 'localhost',
-    port: Number(process.env.DB_PORT) || 3306,
-    username: process.env.DB_USERNAME || '',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || process.env.DB_DATABASE || '',
+    host: process.env.DB_HOST ?? "localhost",
+    port: toNumber(process.env.DB_PORT, 3306),
+    username: process.env.DB_USERNAME ?? "root",
+    password: process.env.DB_PASSWORD ?? "",
+    database: process.env.DB_DATABASE ?? "inventory_management",
+    synchronize: toBoolean(process.env.DB_SYNCHRONIZE, false),
+    logging: toBoolean(process.env.DB_LOGGING, false)
   },
-
-  jwtSecret: process.env.JWT_SECRET || 'secret',
+  jwt: {
+    secret: process.env.JWT_SECRET ?? "change_me_to_a_long_random_secret",
+    expiresIn: process.env.JWT_EXPIRES_IN ?? "1d"
+  },
+  security: {
+    bcryptSaltRounds: toNumber(process.env.BCRYPT_SALT_ROUNDS, 10)
+  },
+  mail: {
+    host: process.env.MAIL_HOST ?? "smtp.gmail.com",
+    port: toNumber(process.env.MAIL_PORT, 587),
+    secure: toBoolean(process.env.MAIL_SECURE, false),
+    user: process.env.MAIL_USER ?? "",
+    password: process.env.MAIL_PASSWORD ?? "",
+    from: process.env.MAIL_FROM ?? process.env.MAIL_USER ?? ""
+  }
 };

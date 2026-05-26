@@ -4,14 +4,14 @@
   "description": "Inventory management API built with Express, TypeScript, TypeORM, MySQL, JWT authentication, and role-based access control.",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "build": "npm run clean && tsc",
     "start": "node dist/server.js",
-    "typeorm": "node --loader ts-node/esm ./node_modules/typeorm/cli.js -d src/database/data-source.ts",
+    "typeorm": "typeorm-ts-node-commonjs -d src/database/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "seed": "ts-node src/database/seeds/index.ts",
+    "seed": "ts-node src/database/seed/index.ts",
     "test": "jest --passWithNoTests",
     "lint": "eslint \"src/**/*.ts\""
   },
@@ -68,5 +68,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "type": "module"
+=======
+  "type": "commonjs"
+>>>>>>> feature/develop-siv
 }
