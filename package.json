@@ -68,9 +68,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-<<<<<<< HEAD
-  "type": "module"
-=======
   "type": "commonjs"
->>>>>>> feature/develop-siv
 }

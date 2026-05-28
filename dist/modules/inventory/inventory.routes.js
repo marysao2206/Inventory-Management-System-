@@ -1,1 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const inventory_controller_js_1 = require("./inventory.controller.js");
+const inventoryRouter = (0, express_1.Router)();
+inventoryRouter.get('/', inventory_controller_js_1.inventoryController.list);
+inventoryRouter.get('/:id', inventory_controller_js_1.inventoryController.getById);
+inventoryRouter.post('/', inventory_controller_js_1.inventoryController.create);
+inventoryRouter.patch('/:id', inventory_controller_js_1.inventoryController.update);
+inventoryRouter.delete('/:id', inventory_controller_js_1.inventoryController.remove);
+exports.default = inventoryRouter;

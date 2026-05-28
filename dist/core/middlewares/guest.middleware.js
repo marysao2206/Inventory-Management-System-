@@ -18,7 +18,12 @@ const guestOnlyMiddleware = (req, _res, next) => {
         return next();
     }
     try {
-        jsonwebtoken_1.default.verify(token, jwt_config_1.jwtConfig.secret);
+        const payload = jsonwebtoken_1.default.verify(token, jwt_config_1.jwtConfig.secret);
+        const requestedEmail = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : undefined;
+        const loggedInEmail = payload.email?.trim().toLowerCase();
+        if (requestedEmail && loggedInEmail === requestedEmail) {
+            return next(new app_error_1.AppError(409, "You are already logged in with this email. Please logout first."));
+        }
         return next(new app_error_1.AppError(409, "You are already logged in. Please logout before using another account."));
     }
     catch {

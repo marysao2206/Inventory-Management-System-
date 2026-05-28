@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authMiddleware = void 0;
+exports.optionalAuthMiddleware = exports.authMiddleware = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const jwt_config_1 = require("../../config/jwt.config");
 const response_message_constant_1 = require("../../constants/response-message.constant");
@@ -34,3 +34,28 @@ const authMiddleware = (req, _res, next) => {
     }
 };
 exports.authMiddleware = authMiddleware;
+const optionalAuthMiddleware = (req, _res, next) => {
+    const header = req.headers.authorization;
+    if (!header?.startsWith("Bearer ")) {
+        return next();
+    }
+    try {
+        const token = header.slice("Bearer ".length);
+        if ((0, token_blocklist_1.isTokenBlocked)(token)) {
+            return next();
+        }
+        const payload = jsonwebtoken_1.default.verify(token, jwt_config_1.jwtConfig.secret);
+        req.user = {
+            id: payload.sub,
+            email: payload.email,
+            role: payload.role
+        };
+        req.authToken = token;
+        req.authTokenExpiresAt = payload.exp ? payload.exp * 1000 : undefined;
+    }
+    catch {
+        // Logout is idempotent: expired or malformed tokens are treated as already logged out.
+    }
+    return next();
+};
+exports.optionalAuthMiddleware = optionalAuthMiddleware;

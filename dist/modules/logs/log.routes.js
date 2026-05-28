@@ -1,1 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const log_controller_js_1 = require("./log.controller.js");
+const logRouter = (0, express_1.Router)();
+logRouter.get('/', log_controller_js_1.logController.list);
+logRouter.get('/:id', log_controller_js_1.logController.getById);
+logRouter.post('/', log_controller_js_1.logController.create);
+logRouter.patch('/:id', log_controller_js_1.logController.update);
+logRouter.delete('/:id', log_controller_js_1.logController.remove);
+exports.default = logRouter;
