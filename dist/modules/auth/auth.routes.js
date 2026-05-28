@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
@@ -15,3 +16,20 @@ router.post("/login", guest_middleware_1.guestOnlyMiddleware, (0, validate_1.val
 router.post("/logout", auth_middleware_1.optionalAuthMiddleware, (0, async_handler_1.asyncHandler)(auth_controller_1.authController.logout));
 router.get("/logout", auth_middleware_1.optionalAuthMiddleware, (0, async_handler_1.asyncHandler)(auth_controller_1.authController.logout));
 exports.default = router;
+=======
+import { Router } from "express";
+import { authMiddleware } from "../../core/middlewares/auth.middleware.js";
+import { guestOnlyMiddleware } from "../../core/middlewares/guest.middleware.js";
+import { asyncHandler } from "../../core/utils/async-handler.js";
+import { validate } from "../../core/utils/validate.js";
+import { authController } from "./auth.controller.js";
+import { loginSchema, registerSchema, resendVerificationSchema, verifyEmailSchema } from "./auth.dto.js";
+const router = Router();
+router.post("/register", guestOnlyMiddleware, validate(registerSchema), asyncHandler(authController.register));
+router.post("/verify-email", validate(verifyEmailSchema), asyncHandler(authController.verifyEmail));
+router.post("/resend-verification", validate(resendVerificationSchema), asyncHandler(authController.resendVerification));
+router.post("/login", guestOnlyMiddleware, validate(loginSchema), asyncHandler(authController.login));
+router.post("/logout", authMiddleware, asyncHandler(authController.logout));
+router.get("/logout", authMiddleware, asyncHandler(authController.logout));
+export default router;
+>>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b

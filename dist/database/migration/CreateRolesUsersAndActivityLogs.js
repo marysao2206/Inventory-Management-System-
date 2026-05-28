@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateRolesUsersAndActivityLogs1711000000000 = void 0;
-class CreateRolesUsersAndActivityLogs1711000000000 {
+export class CreateRolesUsersAndActivityLogs1711000000000 {
     constructor() {
         this.name = "CreateRolesUsersAndActivityLogs1711000000000";
     }
@@ -43,4 +40,3 @@ class CreateRolesUsersAndActivityLogs1711000000000 {
         await queryRunner.query("DROP TABLE roles");
     }
 }
-exports.CreateRolesUsersAndActivityLogs1711000000000 = CreateRolesUsersAndActivityLogs1711000000000;

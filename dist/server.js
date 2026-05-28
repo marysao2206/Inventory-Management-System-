@@ -1,14 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-const env_config_1 = require("./config/env.config");
-const data_source_1 = require("./database/data-source");
-const app_1 = require("./app");
+import "reflect-metadata";
+import { env } from "./config/env.config.js";
+import { AppDataSource } from "./database/data-source.js";
+import { createApp } from "./app.js";
 const start = async () => {
-    await data_source_1.AppDataSource.initialize();
-    const app = (0, app_1.createApp)();
-    app.listen(env_config_1.env.port, () => {
-        console.log(`Inventory API running on port ${env_config_1.env.port}`);
+    await AppDataSource.initialize();
+    const app = createApp();
+    app.listen(env.port, () => {
+        console.log(`Inventory API running on http://localhost:${env.port}`);
     });
 };
 start().catch((error) => {

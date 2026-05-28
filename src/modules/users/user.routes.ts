@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { RoleName } from "../../constants/roles.constant";
-import { authMiddleware } from "../../core/middlewares/auth.middleware";
-import { rbacMiddleware } from "../../core/middlewares/rbac.middleware";
-import { asyncHandler } from "../../core/utils/async-handler";
-import { validate } from "../../core/utils/validate";
-import { createUserSchema, updateUserSchema } from "./user.dto";
-import { userController } from "./user.controller";
+import { RoleName } from "../../constants/roles.constant.js";
+import { authMiddleware } from "../../core/middlewares/auth.middleware.js";
+import { rbacMiddleware } from "../../core/middlewares/rbac.middleware.js";
+import { asyncHandler } from "../../core/utils/async-handler.js";
+import { validate } from "../../core/utils/validate.js";
+import { createUserSchema, updateUserSchema } from "./user.dto.js";
+import { userController } from "./user.controller.js";
 
 const router = Router();
 

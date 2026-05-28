@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddDbmlUniqueIndexes1711000007000 = void 0;
-class AddDbmlUniqueIndexes1711000007000 {
+export class AddDbmlUniqueIndexes1711000007000 {
     constructor() {
         this.name = "AddDbmlUniqueIndexes1711000007000";
     }
@@ -26,4 +23,3 @@ class AddDbmlUniqueIndexes1711000007000 {
         }
     }
 }
-exports.AddDbmlUniqueIndexes1711000007000 = AddDbmlUniqueIndexes1711000007000;

@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
-import { env } from "../../config/env.config";
-import { AppError } from "../../core/errors/app-error";
-import { NotFoundError } from "../../core/errors/not-found-error";
-import { PaginationOptions } from "../../core/utils/pagination";
-import { CreateUserDto, UpdateUserDto } from "./user.dto";
-import { userRepository } from "./user.repository";
+import { env } from "../../config/env.config.js";
+import { AppError } from "../../core/errors/app-error.js";
+import { NotFoundError } from "../../core/errors/not-found-error.js";
+import { PaginationOptions } from "../../core/utils/pagination.js";
+import { CreateUserDto, UpdateUserDto } from "./user.dto.js";
+import { userRepository } from "./user.repository.js";
 
 const sanitizeUser = (user: any) => {
   const { password, emailVerificationCodeHash, ...safeUser } = user;

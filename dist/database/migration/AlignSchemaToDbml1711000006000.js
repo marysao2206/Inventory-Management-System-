@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlignSchemaToDbml1711000006000 = void 0;
-class AlignSchemaToDbml1711000006000 {
+export class AlignSchemaToDbml1711000006000 {
     constructor() {
         this.name = "AlignSchemaToDbml1711000006000";
     }
@@ -113,4 +110,3 @@ class AlignSchemaToDbml1711000006000 {
         }
     }
 }
-exports.AlignSchemaToDbml1711000006000 = AlignSchemaToDbml1711000006000;

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { jwtConfig } from "../../config/jwt.config";
-import { AppError } from "../errors/app-error";
-import { isTokenBlocked } from "../utils/token-blocklist";
+import { jwtConfig } from "../../config/jwt.config.js";
+import { AppError } from "../errors/app-error.js";
+import { isTokenBlocked } from "../utils/token-blocklist.js";
 
 interface JwtPayload extends jwt.JwtPayload {
   email?: string;

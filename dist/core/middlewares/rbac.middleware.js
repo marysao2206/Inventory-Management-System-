@@ -1,21 +1,17 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.rbacMiddleware = void 0;
-const roles_constant_1 = require("../../constants/roles.constant");
-const response_message_constant_1 = require("../../constants/response-message.constant");
-const app_error_1 = require("../errors/app-error");
-const rbacMiddleware = (...roles) => {
+import { RoleName } from "../../constants/roles.constant.js";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { AppError } from "../errors/app-error.js";
+export const rbacMiddleware = (...roles) => {
     return (req, _res, next) => {
         if (!req.user) {
-            return next(new app_error_1.AppError(401, response_message_constant_1.ResponseMessage.UNAUTHORIZED));
+            return next(new AppError(401, ResponseMessage.UNAUTHORIZED));
         }
-        if (req.user.role === roles_constant_1.RoleName.ADMIN) {
+        if (req.user.role === RoleName.ADMIN) {
             return next();
         }
         if (!roles.includes(req.user.role)) {
-            return next(new app_error_1.AppError(403, response_message_constant_1.ResponseMessage.FORBIDDEN));
+            return next(new AppError(403, ResponseMessage.FORBIDDEN));
         }
         return next();
     };
 };
-exports.rbacMiddleware = rbacMiddleware;

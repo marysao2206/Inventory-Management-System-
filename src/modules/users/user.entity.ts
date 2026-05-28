@@ -7,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
-import { Role } from "../auth/auth.entity";
-import { ActivityLog } from "../auth/activity-log.entity";
+import { Role } from "../auth/auth.entity.js";
+import { ActivityLog } from "../auth/activity-log.entity.js";
 
 @Entity("users")
 export class User {
