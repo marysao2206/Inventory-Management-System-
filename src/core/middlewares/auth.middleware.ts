@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { jwtConfig } from "../../config/jwt.config";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { AppError } from "../errors/app-error";
-import { isTokenBlocked } from "../utils/token-blocklist";
+import { jwtConfig } from "../../config/jwt.config.js";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { AppError } from "../errors/app-error.js";
+import { isTokenBlocked } from "../utils/token-blocklist.js";
 
 interface JwtPayload extends jwt.JwtPayload {
   sub: string;

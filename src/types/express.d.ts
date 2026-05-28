@@ -1,4 +1,4 @@
-import { RoleName } from "../constants/roles.constant";
+import { RoleName } from "../constants/roles.constant.js";
 
 declare global {
   namespace Express {

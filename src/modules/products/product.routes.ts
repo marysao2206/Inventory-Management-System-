@@ -1,0 +1,19 @@
+import { Router } from "express";
+import { RoleName } from "../../constants/roles.constant.js";
+import { authMiddleware } from "../../core/middlewares/auth.middleware.js";
+import { rbacMiddleware } from "../../core/middlewares/rbac.middleware.js";
+import { asyncHandler } from "../../core/utils/async-handler.js";
+import { validate } from "../../core/utils/validate.js";
+import { productController } from "./product.controller.js";
+import { createProductSchema, updateProductSchema } from "./product.dto.js";
+
+const router = Router();
+
+router.use(authMiddleware, rbacMiddleware(RoleName.ADMIN));
+router.get("/", asyncHandler(productController.findAll));
+router.get("/:id", asyncHandler(productController.findById));
+router.post("/", validate(createProductSchema), asyncHandler(productController.create));
+router.patch("/:id", validate(updateProductSchema), asyncHandler(productController.update));
+router.delete("/:id", asyncHandler(productController.remove));
+
+export default router;

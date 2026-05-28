@@ -1,33 +1,27 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mailService = exports.MailService = void 0;
-const nodemailer_1 = __importDefault(require("nodemailer"));
-const env_config_1 = require("../../config/env.config");
-class MailService {
+import nodemailer from "nodemailer";
+import { env } from "../../config/env.config.js";
+export class MailService {
     get isConfigured() {
-        return Boolean(env_config_1.env.mail.host && env_config_1.env.mail.user && env_config_1.env.mail.password && env_config_1.env.mail.from);
+        return Boolean(env.mail.host && env.mail.user && env.mail.password && env.mail.from);
     }
     async sendOtpEmail(to, otp) {
         if (!this.isConfigured) {
-            if (env_config_1.env.nodeEnv !== "production") {
+            if (env.nodeEnv !== "production") {
                 console.log(`Email verification OTP for ${to}: ${otp}`);
             }
             return;
         }
-        const transporter = nodemailer_1.default.createTransport({
-            host: env_config_1.env.mail.host,
-            port: env_config_1.env.mail.port,
-            secure: env_config_1.env.mail.secure,
+        const transporter = nodemailer.createTransport({
+            host: env.mail.host,
+            port: env.mail.port,
+            secure: env.mail.secure,
             auth: {
-                user: env_config_1.env.mail.user,
-                pass: env_config_1.env.mail.password
+                user: env.mail.user,
+                pass: env.mail.password
             }
         });
         await transporter.sendMail({
-            from: env_config_1.env.mail.from,
+            from: env.mail.from,
             to,
             subject: "Verify your Inventory Management account",
             text: `Your verification code is ${otp}. It expires in 10 minutes.`,
@@ -42,5 +36,4 @@ class MailService {
         });
     }
 }
-exports.MailService = MailService;
-exports.mailService = new MailService();
+export const mailService = new MailService();

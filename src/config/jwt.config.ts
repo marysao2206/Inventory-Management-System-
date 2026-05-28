@@ -1,5 +1,5 @@
 import { SignOptions } from "jsonwebtoken";
-import { env } from "./env.config";
+import { env } from "./env.config.js";
 
 export const jwtConfig: SignOptions & { secret: string } = {
   secret: env.jwt.secret,

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { apiResponse } from "../../core/utils/api-response";
-import { authService } from "./auth.service";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { apiResponse } from "../../core/utils/api-response.js";
+import { authService } from "./auth.service.js";
 
 export class AuthController {
   register = async (req: Request, res: Response) => {

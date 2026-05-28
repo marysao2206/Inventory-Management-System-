@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateOrdersAndPayments1711000005000 = void 0;
-class CreateOrdersAndPayments1711000005000 {
+export class CreateOrdersAndPayments1711000005000 {
     constructor() {
         this.name = "CreateOrdersAndPayments1711000005000";
     }
@@ -102,4 +99,3 @@ class CreateOrdersAndPayments1711000005000 {
         }
     }
 }
-exports.CreateOrdersAndPayments1711000005000 = CreateOrdersAndPayments1711000005000;

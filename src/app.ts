@@ -3,9 +3,9 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
-import { env } from "./config/env.config";
-import { errorMiddleware, notFoundMiddleware } from "./core/middlewares/error.middleware";
-import routes from "./routes";
+import { env } from "./config/env.config.js";
+import { errorMiddleware, notFoundMiddleware } from "./core/middlewares/error.middleware.js";
+import routes from "./routes/index.js";
 
 export const createApp = () => {
   const app = express();

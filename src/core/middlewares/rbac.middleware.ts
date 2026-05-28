@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { RoleName } from "../../constants/roles.constant";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { AppError } from "../errors/app-error";
+import { RoleName } from "../../constants/roles.constant.js";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { AppError } from "../errors/app-error.js";
 
 export const rbacMiddleware = (...roles: RoleName[]) => {
   return (req: Request, _res: Response, next: NextFunction) => {

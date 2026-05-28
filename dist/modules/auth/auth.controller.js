@@ -1,32 +1,28 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.authController = exports.AuthController = void 0;
-const response_message_constant_1 = require("../../constants/response-message.constant");
-const api_response_1 = require("../../core/utils/api-response");
-const auth_service_1 = require("./auth.service");
-class AuthController {
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { apiResponse } from "../../core/utils/api-response.js";
+import { authService } from "./auth.service.js";
+export class AuthController {
     constructor() {
         this.register = async (req, res) => {
-            const data = await auth_service_1.authService.register(req.body, req.ip);
-            return (0, api_response_1.apiResponse)(res, 201, response_message_constant_1.ResponseMessage.CREATED, data);
+            const data = await authService.register(req.body, req.ip);
+            return apiResponse(res, 201, ResponseMessage.CREATED, data);
         };
         this.login = async (req, res) => {
-            const data = await auth_service_1.authService.login(req.body, req.ip);
-            return (0, api_response_1.apiResponse)(res, 200, response_message_constant_1.ResponseMessage.LOGIN_SUCCESS, data);
+            const data = await authService.login(req.body, req.ip);
+            return apiResponse(res, 200, ResponseMessage.LOGIN_SUCCESS, data);
         };
         this.logout = async (req, res) => {
-            const data = await auth_service_1.authService.logout(req.user.id, req.authToken, req.authTokenExpiresAt, req.ip);
-            return (0, api_response_1.apiResponse)(res, 200, "Logout successful", data);
+            const data = await authService.logout(req.user.id, req.authToken, req.authTokenExpiresAt, req.ip);
+            return apiResponse(res, 200, "Logout successful", data);
         };
         this.verifyEmail = async (req, res) => {
-            const data = await auth_service_1.authService.verifyEmail(req.body, req.ip);
-            return (0, api_response_1.apiResponse)(res, 200, "Email verified successfully", data);
+            const data = await authService.verifyEmail(req.body, req.ip);
+            return apiResponse(res, 200, "Email verified successfully", data);
         };
         this.resendVerification = async (req, res) => {
-            const data = await auth_service_1.authService.resendVerification(req.body, req.ip);
-            return (0, api_response_1.apiResponse)(res, 200, "Verification code sent", data);
+            const data = await authService.resendVerification(req.body, req.ip);
+            return apiResponse(res, 200, "Verification code sent", data);
         };
     }
 }
-exports.AuthController = AuthController;
-exports.authController = new AuthController();
+export const authController = new AuthController();

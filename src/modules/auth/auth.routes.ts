@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { authMiddleware } from "../../core/middlewares/auth.middleware";
-import { guestOnlyMiddleware } from "../../core/middlewares/guest.middleware";
-import { asyncHandler } from "../../core/utils/async-handler";
-import { validate } from "../../core/utils/validate";
-import { authController } from "./auth.controller";
-import { loginSchema, registerSchema, resendVerificationSchema, verifyEmailSchema } from "./auth.dto";
+import { authMiddleware } from "../../core/middlewares/auth.middleware.js";
+import { guestOnlyMiddleware } from "../../core/middlewares/guest.middleware.js";
+import { asyncHandler } from "../../core/utils/async-handler.js";
+import { validate } from "../../core/utils/validate.js";
+import { authController } from "./auth.controller.js";
+import { loginSchema, registerSchema, resendVerificationSchema, verifyEmailSchema } from "./auth.dto.js";
 
 const router = Router();
 

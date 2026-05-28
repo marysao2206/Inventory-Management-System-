@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateCategoriesAndSuppliers1711000001000 = void 0;
-class CreateCategoriesAndSuppliers1711000001000 {
+export class CreateCategoriesAndSuppliers1711000001000 {
     constructor() {
         this.name = "CreateCategoriesAndSuppliers1711000001000";
     }
@@ -31,4 +28,3 @@ class CreateCategoriesAndSuppliers1711000001000 {
         await queryRunner.query("DROP TABLE categories");
     }
 }
-exports.CreateCategoriesAndSuppliers1711000001000 = CreateCategoriesAndSuppliers1711000001000;

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,29 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Role = void 0;
-const typeorm_1 = require("typeorm");
-const user_entity_1 = require("../users/user.entity");
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "../users/user.entity.js";
 let Role = class Role {
 };
-exports.Role = Role;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)({ type: "bigint" }),
+    PrimaryGeneratedColumn({ type: "bigint" }),
     __metadata("design:type", String)
 ], Role.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 150, unique: true }),
+    Column({ type: "varchar", length: 150, unique: true }),
     __metadata("design:type", String)
 ], Role.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: "created_at", type: "timestamp" }),
+    CreateDateColumn({ name: "created_at", type: "timestamp" }),
     __metadata("design:type", Date)
 ], Role.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => user_entity_1.User, (user) => user.role),
+    OneToMany(() => User, (user) => user.role),
     __metadata("design:type", Array)
 ], Role.prototype, "users", void 0);
-exports.Role = Role = __decorate([
-    (0, typeorm_1.Entity)("roles")
+Role = __decorate([
+    Entity("roles")
 ], Role);
+export { Role };
