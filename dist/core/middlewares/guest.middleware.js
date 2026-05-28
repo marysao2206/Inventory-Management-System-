@@ -12,7 +12,12 @@ export const guestOnlyMiddleware = (req, _res, next) => {
         return next();
     }
     try {
-        jwt.verify(token, jwtConfig.secret);
+        const payload = jwt.verify(token, jwtConfig.secret);
+        const requestedEmail = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : undefined;
+        const loggedInEmail = payload.email?.trim().toLowerCase();
+        if (requestedEmail && loggedInEmail === requestedEmail) {
+            return next(new AppError(409, "You are already logged in with this email. Please logout first."));
+        }
         return next(new AppError(409, "You are already logged in. Please logout before using another account."));
     }
     catch {

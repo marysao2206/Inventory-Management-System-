@@ -37,3 +37,31 @@ export const authMiddleware = (req: Request, _res: Response, next: NextFunction)
     return next(new AppError(401, ResponseMessage.UNAUTHORIZED));
   }
 };
+
+export const optionalAuthMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  const header = req.headers.authorization;
+
+  if (!header?.startsWith("Bearer ")) {
+    return next();
+  }
+
+  try {
+    const token = header.slice("Bearer ".length);
+    if (isTokenBlocked(token)) {
+      return next();
+    }
+
+    const payload = jwt.verify(token, jwtConfig.secret) as JwtPayload;
+    req.user = {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role
+    };
+    req.authToken = token;
+    req.authTokenExpiresAt = payload.exp ? payload.exp * 1000 : undefined;
+  } catch {
+    // Logout is idempotent: expired or malformed tokens are treated as already logged out.
+  }
+
+  return next();
+};

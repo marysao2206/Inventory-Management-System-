@@ -83,12 +83,23 @@ export class AuthService {
     return this.toAuthResponse(user);
   }
 
-  async logout(userId: string, token: string, tokenExpiresAt?: number, ipAddress?: string) {
-    blockToken(token, tokenExpiresAt ?? Date.now() + 24 * 60 * 60 * 1000);
-    await this.logActivity(userId, "logged out", ipAddress);
+  async logout(userId?: string, token?: string, tokenExpiresAt?: number, ipAddress?: string) {
+    if (!token) {
+      return {
+        message: "You are already logged out"
+      };
+    }
+
+    if (token) {
+      blockToken(token, tokenExpiresAt ?? Date.now() + 24 * 60 * 60 * 1000);
+    }
+
+    if (userId) {
+      await this.logActivity(userId, "logged out", ipAddress);
+    }
 
     return {
-      message: "Logout successful"
+      message: "You have been successfully logged out."
     };
   }
 

@@ -2,7 +2,6 @@
   "name": "inventory-management-system",
   "version": "1.0.0",
   "description": "Inventory management API built with Express, TypeScript, TypeORM, MySQL, JWT authentication, and role-based access control.",
-  "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "dev": "set TS_NODE_TRANSPILE_ONLY=true&& node --watch --loader ts-node/esm --experimental-specifier-resolution=node src/server.ts",
@@ -68,5 +67,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }
