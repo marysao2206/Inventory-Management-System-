@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-=======
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,4 +38,3 @@ Order = __decorate([
     Entity("orders")
 ], Order);
 export { Order };
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b

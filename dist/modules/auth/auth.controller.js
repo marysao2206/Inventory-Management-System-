@@ -12,13 +12,8 @@ export class AuthController {
             return apiResponse(res, 200, ResponseMessage.LOGIN_SUCCESS, data);
         };
         this.logout = async (req, res) => {
-<<<<<<< HEAD
-            const data = await auth_service_1.authService.logout(req.user?.id, req.authToken, req.authTokenExpiresAt, req.ip);
-            return (0, api_response_1.apiResponse)(res, 200, data.message, data);
-=======
-            const data = await authService.logout(req.user.id, req.authToken, req.authTokenExpiresAt, req.ip);
-            return apiResponse(res, 200, "Logout successful", data);
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b
+            const data = await authService.logout(req.user?.id, req.authToken, req.authTokenExpiresAt, req.ip);
+            return apiResponse(res, 200, data.message, data);
         };
         this.verifyEmail = async (req, res) => {
             const data = await authService.verifyEmail(req.body, req.ip);

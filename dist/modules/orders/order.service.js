@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-=======
 import { NotFoundError } from "../../core/errors/not-found-error.js";
 import { orderRepository } from "./order.repository.js";
 export class OrderService {
@@ -45,4 +42,3 @@ export class OrderService {
     }
 }
 export const orderService = new OrderService();
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b

@@ -99,7 +99,7 @@ export class AuthService {
     }
 
     return {
-      message: "Logout successful"
+      message: "You have been successfully logged out."
     };
   }
 

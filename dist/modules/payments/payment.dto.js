@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-=======
 import { z } from "zod";
 export const createPaymentSchema = z.object({
     body: z.object({
@@ -16,4 +13,3 @@ export const createPaymentSchema = z.object({
 export const updatePaymentSchema = z.object({
     body: createPaymentSchema.shape.body.partial()
 });
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b

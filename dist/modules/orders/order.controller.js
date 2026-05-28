@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-=======
 import { ResponseMessage } from "../../constants/response-message.constant.js";
 import { apiResponse } from "../../core/utils/api-response.js";
 import { getPagination, paginationMeta } from "../../core/utils/pagination.js";
@@ -28,4 +25,3 @@ export class OrderController {
     }
 }
 export const orderController = new OrderController();
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b

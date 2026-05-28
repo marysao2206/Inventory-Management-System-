@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-=======
 import { AppError } from "../../core/errors/app-error.js";
 import { NotFoundError } from "../../core/errors/not-found-error.js";
 import { paymentRepository } from "./payment.repository.js";
@@ -55,4 +52,3 @@ export class PaymentService {
     }
 }
 export const paymentService = new PaymentService();
->>>>>>> 41c04b2d18fa77d3ca9372aafa2db0fb5f6d726b
