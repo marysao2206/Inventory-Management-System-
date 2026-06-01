@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../database/data-source.js";
 import { InventoryDetail, InventoryItem, InventoryLog, Stock } from "./inventory.entity.js";
+export const inventoryItemRepository = AppDataSource.getRepository(InventoryItem);
 const toStatus = (quantity, explicit) => {
     if (explicit)
         return explicit;

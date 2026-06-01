@@ -2,6 +2,8 @@ import { AppDataSource } from "../../database/data-source.js";
 import type { CreateInventoryDto, ReceiveStockDto, UpdateInventoryDto } from "./inventory.dto.js";
 import { InventoryDetail, InventoryItem, InventoryLog, InventoryStatus, Stock } from "./inventory.entity.js";
 
+export const inventoryItemRepository = AppDataSource.getRepository(InventoryItem);
+
 const toStatus = (quantity: number, explicit?: InventoryStatus): InventoryStatus => {
   if (explicit) return explicit;
   if (quantity <= 0) return "OUT_OF_STOCK";

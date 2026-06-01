@@ -1,12 +1,11 @@
-import { Request, Response } from "express";
 import { ResponseMessage } from "../../constants/response-message.constant.js";
 import { apiResponse } from "../../core/utils/api-response.js";
 import { dashboardService } from "./dashboard.service.js";
-
 export class DashboardController {
-  getSummary = async (_req: Request, res: Response) => {
-    return apiResponse(res, 200, ResponseMessage.FETCHED, await dashboardService.getSummary());
-  };
+    constructor() {
+        this.getSummary = async (_req, res) => {
+            return apiResponse(res, 200, ResponseMessage.FETCHED, await dashboardService.getSummary());
+        };
+    }
 }
-
 export const dashboardController = new DashboardController();
