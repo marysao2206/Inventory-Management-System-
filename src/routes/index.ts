@@ -4,6 +4,8 @@ import categoryRoutes from "../modules/categories/category.routes.js";
 import orderRoutes from "../modules/orders/order.routes.js";
 import paymentRoutes from "../modules/payments/payment.routes.js";
 import productRoutes from "../modules/products/product.routes.js";
+import supplierRoutes from "../modules/suppliers/supplier.routes.js"
+import inventoryRoutes from "../modules/inventory/inventory.routes.js"
 
 import userRoutes from "../modules/users/user.routes.js";
 
@@ -15,5 +17,6 @@ router.use("/orders", orderRoutes);
 router.use("/payments", paymentRoutes);
 router.use("/products", productRoutes);
 router.use("/users", userRoutes);
-
+router.use('/suppliers', supplierRoutes);
+router.use("/inventory", inventoryRoutes);
 export default router;

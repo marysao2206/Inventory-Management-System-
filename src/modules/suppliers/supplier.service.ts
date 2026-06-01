@@ -1,65 +1,67 @@
 import { AppError } from "../../core/errors/app-error.js";
 import { NotFoundError } from "../../core/errors/not-found-error.js";
 import { PaginationOptions } from "../../core/utils/pagination.js";
-import { CreatePaymentDto, UpdatePaymentDto } from "./payment.dto.js";
-import { paymentRepository } from "./payment.repository.js";
+import { CreateSupplierDto, UpdateSupplierDto } from "./supplier.dto.js";
+import { supplierRepository } from "./supplier.repository.js";
 
-export class PaymentService {
+export class SupplierService {
   async findAll({ skip, limit }: PaginationOptions) {
-    const [payments, total] = await paymentRepository.findAndCount({
+    const [suppliers, total] = await supplierRepository.findAndCount({
       skip,
       take: limit,
       order: { createdAt: "DESC" }
     });
 
-    return { data: payments, total };
+    return { data: suppliers, total };
   }
 
   async findById(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    return payment;
+    const supplier = await supplierRepository.findOne({ where: { id } });
+    if (!supplier) throw new NotFoundError("Supplier not found");
+    return supplier;
   }
 
-  async create(dto: CreatePaymentDto) {
-    const existingTransaction = dto.transactionId
-      ? await paymentRepository.findOne({ where: { transactionId: dto.transactionId } })
-      : null;
+  async create(dto: CreateSupplierDto) {
+    const name = dto.name.trim();
+    const exists = await supplierRepository.findOne({ where: { name } });
+    if (exists) throw new AppError(409, "Supplier name already exists");
 
-    if (existingTransaction) {
-      throw new AppError(409, "Transaction ID already exists");
-    }
-
-    const payment = paymentRepository.create({
-      ...dto,
-      amount: dto.amount.toFixed(2)
+    const supplier = supplierRepository.create({
+      name,
+      contactName: dto.contactName?.trim() || null,
+      phone: dto.phone?.trim() || null,
+      email: dto.email?.trim().toLowerCase() || null,
+      address: dto.address?.trim() || null
     });
 
-    return paymentRepository.save(payment);
+    return supplierRepository.save(supplier);
   }
 
-  async update(id: string, dto: UpdatePaymentDto) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
+  async update(id: string, dto: UpdateSupplierDto) {
+    const supplier = await supplierRepository.findOne({ where: { id } });
+    if (!supplier) throw new NotFoundError("Supplier not found");
 
-    if (dto.transactionId && dto.transactionId !== payment.transactionId) {
-      const existingTransaction = await paymentRepository.findOne({ where: { transactionId: dto.transactionId } });
-      if (existingTransaction) throw new AppError(409, "Transaction ID already exists");
+    if (dto.name && dto.name.trim() !== supplier.name) {
+      const exists = await supplierRepository.findOne({ where: { name: dto.name.trim() } });
+      if (exists) throw new AppError(409, "Supplier name already exists");
     }
 
-    Object.assign(payment, {
-      ...dto,
-      amount: dto.amount !== undefined ? dto.amount.toFixed(2) : payment.amount
+    Object.assign(supplier, {
+      name: dto.name?.trim() ?? supplier.name,
+      contactName: dto.contactName !== undefined ? dto.contactName.trim() || null : supplier.contactName,
+      phone: dto.phone !== undefined ? dto.phone.trim() || null : supplier.phone,
+      email: dto.email !== undefined ? dto.email.trim().toLowerCase() || null : supplier.email,
+      address: dto.address !== undefined ? dto.address.trim() || null : supplier.address
     });
 
-    return paymentRepository.save(payment);
+    return supplierRepository.save(supplier);
   }
 
   async remove(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    await paymentRepository.remove(payment);
+    const supplier = await supplierRepository.findOne({ where: { id } });
+    if (!supplier) throw new NotFoundError("Supplier not found");
+    await supplierRepository.remove(supplier);
   }
 }
 
-export const paymentService = new PaymentService();
+export const supplierService = new SupplierService();

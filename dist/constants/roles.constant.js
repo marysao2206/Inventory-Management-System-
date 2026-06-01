@@ -18,6 +18,10 @@ export var Permission;
     Permission["PRODUCTS_CREATE"] = "products:create";
     Permission["PRODUCTS_UPDATE"] = "products:update";
     Permission["PRODUCTS_DELETE"] = "products:delete";
+    Permission["SUPPLIERS_READ"] = "suppliers:read";
+    Permission["SUPPLIERS_CREATE"] = "suppliers:create";
+    Permission["SUPPLIERS_UPDATE"] = "suppliers:update";
+    Permission["SUPPLIERS_DELETE"] = "suppliers:delete";
     Permission["ORDERS_READ"] = "orders:read";
     Permission["ORDERS_CREATE"] = "orders:create";
     Permission["ORDERS_UPDATE"] = "orders:update";
@@ -26,9 +30,19 @@ export var Permission;
     Permission["PAYMENTS_CREATE"] = "payments:create";
     Permission["PAYMENTS_UPDATE"] = "payments:update";
     Permission["PAYMENTS_DELETE"] = "payments:delete";
+    Permission["INVENTORY_READ"] = "inventory:read";
+    Permission["INVENTORY_CREATE"] = "inventory:create";
+    Permission["INVENTORY_UPDATE"] = "inventory:update";
+    Permission["INVENTORY_DELETE"] = "inventory:delete";
 })(Permission || (Permission = {}));
 export const rolePermissions = {
     [RoleName.ADMIN]: Object.values(Permission),
+    // [RoleName.ADMIN]: [
+    //   Permission.INVENTORY_READ,
+    //   Permission.INVENTORY_CREATE,
+    //   Permission.INVENTORY_UPDATE,
+    //   Permission.INVENTORY_DELETE,
+    // ],
     [RoleName.MANAGER]: [
         Permission.CATEGORIES_READ,
         Permission.CATEGORIES_CREATE,
@@ -38,6 +52,10 @@ export const rolePermissions = {
         Permission.PRODUCTS_CREATE,
         Permission.PRODUCTS_UPDATE,
         Permission.PRODUCTS_DELETE,
+        Permission.SUPPLIERS_READ,
+        Permission.SUPPLIERS_CREATE,
+        Permission.SUPPLIERS_UPDATE,
+        Permission.SUPPLIERS_DELETE,
         Permission.ORDERS_READ,
         Permission.ORDERS_CREATE,
         Permission.ORDERS_UPDATE,
@@ -49,6 +67,7 @@ export const rolePermissions = {
     [RoleName.STAFF]: [
         Permission.CATEGORIES_READ,
         Permission.PRODUCTS_READ,
+        Permission.SUPPLIERS_READ,
         Permission.ORDERS_READ,
         Permission.ORDERS_CREATE,
         Permission.ORDERS_UPDATE,

@@ -1,65 +1,32 @@
-import { AppError } from "../../core/errors/app-error.js";
-import { NotFoundError } from "../../core/errors/not-found-error.js";
-import { PaginationOptions } from "../../core/utils/pagination.js";
-import { CreatePaymentDto, UpdatePaymentDto } from "./payment.dto.js";
-import { paymentRepository } from "./payment.repository.js";
+import { Request, Response } from "express";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { apiResponse } from "../../core/utils/api-response.js";
+import { getPagination, paginationMeta } from "../../core/utils/pagination.js";
+import { supplierService } from "./supplier.service.js";
 
-export class PaymentService {
-  async findAll({ skip, limit }: PaginationOptions) {
-    const [payments, total] = await paymentRepository.findAndCount({
-      skip,
-      take: limit,
-      order: { createdAt: "DESC" }
-    });
+export class SupplierController {
+  findAll = async (req: Request, res: Response) => {
+    const pagination = getPagination(req);
+    const { data, total } = await supplierService.findAll(pagination);
+    return apiResponse(res, 200, ResponseMessage.FETCHED, data, paginationMeta(total, pagination.page, pagination.limit));
+  };
 
-    return { data: payments, total };
-  }
+  findById = async (req: Request, res: Response) => {
+    return apiResponse(res, 200, ResponseMessage.FETCHED, await supplierService.findById(req.params.id));
+  };
 
-  async findById(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    return payment;
-  }
+  create = async (req: Request, res: Response) => {
+    return apiResponse(res, 201, ResponseMessage.CREATED, await supplierService.create(req.body));
+  };
 
-  async create(dto: CreatePaymentDto) {
-    const existingTransaction = dto.transactionId
-      ? await paymentRepository.findOne({ where: { transactionId: dto.transactionId } })
-      : null;
+  update = async (req: Request, res: Response) => {
+    return apiResponse(res, 200, ResponseMessage.UPDATED, await supplierService.update(req.params.id, req.body));
+  };
 
-    if (existingTransaction) {
-      throw new AppError(409, "Transaction ID already exists");
-    }
-
-    const payment = paymentRepository.create({
-      ...dto,
-      amount: dto.amount.toFixed(2)
-    });
-
-    return paymentRepository.save(payment);
-  }
-
-  async update(id: string, dto: UpdatePaymentDto) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-
-    if (dto.transactionId && dto.transactionId !== payment.transactionId) {
-      const existingTransaction = await paymentRepository.findOne({ where: { transactionId: dto.transactionId } });
-      if (existingTransaction) throw new AppError(409, "Transaction ID already exists");
-    }
-
-    Object.assign(payment, {
-      ...dto,
-      amount: dto.amount !== undefined ? dto.amount.toFixed(2) : payment.amount
-    });
-
-    return paymentRepository.save(payment);
-  }
-
-  async remove(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    await paymentRepository.remove(payment);
-  }
+  remove = async (req: Request, res: Response) => {
+    await supplierService.remove(req.params.id);
+    return apiResponse(res, 200, ResponseMessage.DELETED);
+  };
 }
 
-export const paymentService = new PaymentService();
+export const supplierController = new SupplierController();

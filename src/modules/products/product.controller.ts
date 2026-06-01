@@ -16,7 +16,7 @@ export class ProductController {
   };
 
   create = async (req: Request, res: Response) => {
-    return apiResponse(res, 201, ResponseMessage.CREATED, await productService.create(req.body));
+    return apiResponse(res, 201, ResponseMessage.CREATED, await productService.create(req.body, req.user?.id));
   };
 
   update = async (req: Request, res: Response) => {

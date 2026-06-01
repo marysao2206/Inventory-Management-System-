@@ -36,5 +36,14 @@ export const env = {
         user: process.env.MAIL_USER ?? "",
         password: process.env.MAIL_PASSWORD ?? "",
         from: process.env.MAIL_FROM ?? process.env.MAIL_USER ?? ""
+    },
+    bakong: {
+        apiBaseUrl: process.env.BAKONG_API_BASE_URL ?? "https://api-bakong.nbc.gov.kh",
+        apiToken: process.env.BAKONG_API_TOKEN ?? "",
+        merchantId: process.env.BAKONG_MERCHANT_ID ?? "",
+        merchantName: process.env.BAKONG_MERCHANT_NAME ?? "My Store",
+        merchantCity: process.env.BAKONG_MERCHANT_CITY ?? "Phnom Penh",
+        currency: process.env.BAKONG_CURRENCY ?? "KHR",
+        expirationSeconds: toNumber(process.env.BAKONG_EXPIRATION_SECONDS, 900)
     }
 };

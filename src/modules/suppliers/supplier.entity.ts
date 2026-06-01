@@ -1,65 +1,28 @@
-import { AppError } from "../../core/errors/app-error.js";
-import { NotFoundError } from "../../core/errors/not-found-error.js";
-import { PaginationOptions } from "../../core/utils/pagination.js";
-import { CreatePaymentDto, UpdatePaymentDto } from "./payment.dto.js";
-import { paymentRepository } from "./payment.repository.js";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-export class PaymentService {
-  async findAll({ skip, limit }: PaginationOptions) {
-    const [payments, total] = await paymentRepository.findAndCount({
-      skip,
-      take: limit,
-      order: { createdAt: "DESC" }
-    });
+@Entity("suppliers")
+export class Supplier {
+  @PrimaryGeneratedColumn({ type: "bigint" })
+  id!: string;
 
-    return { data: payments, total };
-  }
+  @Column({ type: "varchar", length: 150, unique: true })
+  name!: string;
 
-  async findById(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    return payment;
-  }
+  @Column({ name: "contact_name", type: "varchar", length: 150, nullable: true })
+  contactName?: string | null;
 
-  async create(dto: CreatePaymentDto) {
-    const existingTransaction = dto.transactionId
-      ? await paymentRepository.findOne({ where: { transactionId: dto.transactionId } })
-      : null;
+  @Column({ type: "varchar", length: 20, nullable: true })
+  phone?: string | null;
 
-    if (existingTransaction) {
-      throw new AppError(409, "Transaction ID already exists");
-    }
+  @Column({ type: "varchar", length: 150, nullable: true })
+  email?: string | null;
 
-    const payment = paymentRepository.create({
-      ...dto,
-      amount: dto.amount.toFixed(2)
-    });
+  @Column({ type: "text", nullable: true })
+  address?: string | null;
 
-    return paymentRepository.save(payment);
-  }
+  @CreateDateColumn({ name: "created_at", type: "timestamp" })
+  createdAt!: Date;
 
-  async update(id: string, dto: UpdatePaymentDto) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-
-    if (dto.transactionId && dto.transactionId !== payment.transactionId) {
-      const existingTransaction = await paymentRepository.findOne({ where: { transactionId: dto.transactionId } });
-      if (existingTransaction) throw new AppError(409, "Transaction ID already exists");
-    }
-
-    Object.assign(payment, {
-      ...dto,
-      amount: dto.amount !== undefined ? dto.amount.toFixed(2) : payment.amount
-    });
-
-    return paymentRepository.save(payment);
-  }
-
-  async remove(id: string) {
-    const payment = await paymentRepository.findOne({ where: { id } });
-    if (!payment) throw new NotFoundError("Payment not found");
-    await paymentRepository.remove(payment);
-  }
+  @UpdateDateColumn({ name: "updated_at", type: "timestamp" })
+  updatedAt!: Date;
 }
-
-export const paymentService = new PaymentService();

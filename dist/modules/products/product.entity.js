@@ -8,6 +8,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ManyToOne, JoinColumn } from "typeorm";
+import { Category } from "../categories/category.entity.js";
+import { Supplier } from "../suppliers/supplier.entity.js";
 let Product = class Product {
 };
 __decorate([
@@ -15,13 +18,15 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "id", void 0);
 __decorate([
-    Column({ name: "category_id", type: "bigint" }),
-    __metadata("design:type", String)
-], Product.prototype, "categoryId", void 0);
+    ManyToOne(() => Category),
+    JoinColumn({ name: "category_id" }),
+    __metadata("design:type", Category)
+], Product.prototype, "category", void 0);
 __decorate([
-    Column({ name: "supplier_id", type: "bigint" }),
-    __metadata("design:type", String)
-], Product.prototype, "supplierId", void 0);
+    ManyToOne(() => Supplier),
+    JoinColumn({ name: "supplier_id" }),
+    __metadata("design:type", Supplier)
+], Product.prototype, "supplier", void 0);
 __decorate([
     Column({ type: "varchar", length: 150 }),
     __metadata("design:type", String)
@@ -46,6 +51,10 @@ __decorate([
     CreateDateColumn({ name: "created_at", type: "timestamp" }),
     __metadata("design:type", Date)
 ], Product.prototype, "createdAt", void 0);
+__decorate([
+    Column({ name: "created_by", type: "bigint", nullable: true }),
+    __metadata("design:type", Object)
+], Product.prototype, "createdBy", void 0);
 Product = __decorate([
     Entity("products")
 ], Product);
