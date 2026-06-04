@@ -15,16 +15,16 @@ export const updatePaymentSchema = z.object({
 });
 export const generateQRSchema = z.object({
     body: z.object({
-        amount: z.number().positive("Amount must be positive"),
+        orderId: z.string().min(1, "Order ID is required"),
         merchantId: z.string().min(1, "Merchant ID is required").optional(),
         merchantName: z.string().optional(),
         merchantCity: z.string().optional(),
-        currency: z.enum(["KHR", "USD"]).optional(),
-        orderId: z.string().optional()
+        currency: z.enum(["KHR", "USD"]).optional()
     })
 });
 export const checkTransactionSchema = z.object({
     body: z.object({
+        orderId: z.string().min(1, "Order ID is required"),
         md5: z.string().min(1, "md5 is required")
     })
 });

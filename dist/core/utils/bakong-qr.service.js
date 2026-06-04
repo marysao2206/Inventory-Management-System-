@@ -27,15 +27,25 @@ export class BakongQRService {
         if (!Number.isFinite(input.amount) || input.amount <= 0) {
             throw new AppError(400, "Amount must be a positive number");
         }
+        try {
+            const accountCheck = await BakongKHQR.checkBakongAccount(env.bakong.accountCheckUrl, merchantId);
+            if (!accountCheck?.data?.bakongAccountExisted) {
+                throw new AppError(400, "BAKONG_MERCHANT_ID is not a valid Bakong receiving account");
+            }
+        }
+        catch (error) {
+            if (error instanceof AppError)
+                throw error;
+            throw new AppError(400, "Unable to validate Bakong merchant account", error);
+        }
         const optionalData = {
             currency: this.resolveCurrency(currencyCode),
             amount: input.amount,
-            billNumber: input.orderId,
-            expirationTimestamp: Date.now() + env.bakong.expirationSeconds * 1000
+            billNumber: input.orderId
         };
         const khqr = new BakongKHQR();
-        const info = new IndividualInfo(merchantId, this.resolveCurrency(currencyCode), merchantName, merchantCity, optionalData);
-        const generated = khqr.generateIndividual(info);
+        const individualInfo = new IndividualInfo(merchantId, merchantName, merchantCity, optionalData);
+        const generated = khqr.generateIndividual(individualInfo);
         if (!generated?.data?.qr || !generated?.data?.md5) {
             throw new AppError(400, generated?.error?.message ?? "Failed to generate KHQR");
         }

@@ -42,6 +42,7 @@ export const env = {
   },
   bakong: {
     apiBaseUrl: process.env.BAKONG_API_BASE_URL ?? "https://api-bakong.nbc.gov.kh",
+    accountCheckUrl: process.env.BAKONG_ACCOUNT_CHECK_URL ?? "https://api-bakong.nbc.gov.kh/v1/check_bakong_account",
     apiToken: process.env.BAKONG_API_TOKEN ?? "",
     merchantId: process.env.BAKONG_MERCHANT_ID ?? "",
     merchantName: process.env.BAKONG_MERCHANT_NAME ?? "My Store",

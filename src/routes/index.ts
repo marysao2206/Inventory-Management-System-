@@ -6,6 +6,7 @@ import paymentRoutes from "../modules/payments/payment.routes.js";
 import productRoutes from "../modules/products/product.routes.js";
 import supplierRoutes from "../modules/suppliers/supplier.routes.js"
 import inventoryRoutes from "../modules/inventory/inventory.routes.js"
+import dashboardRoutes from "../modules/dashboard/dashboard.roures.js";
 
 import userRoutes from "../modules/users/user.routes.js";
 
@@ -19,4 +20,5 @@ router.use("/products", productRoutes);
 router.use("/users", userRoutes);
 router.use('/suppliers', supplierRoutes);
 router.use("/inventory", inventoryRoutes);
+router.use("/dashboard", dashboardRoutes);
 export default router;
