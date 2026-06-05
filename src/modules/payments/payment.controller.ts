@@ -48,7 +48,7 @@ export class PaymentController {
     const result = await BakongQRService.checkTransactionByMd5(req.body.md5);
     return apiResponse(res, 200, ResponseMessage.FETCHED, result);
   };
-  
+
   findAll = async (req: Request, res: Response) => {
     const pagination = getPagination(req);
     const { data, total } = await paymentService.findAll(pagination);

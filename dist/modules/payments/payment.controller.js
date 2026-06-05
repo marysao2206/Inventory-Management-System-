@@ -3,11 +3,14 @@ import { apiResponse } from "../../core/utils/api-response.js";
 import { getPagination, paginationMeta } from "../../core/utils/pagination.js";
 import { paymentService } from "./payment.service.js";
 import { BakongQRService } from "../../core/utils/bakong-qr.service.js";
+import { orderService } from "../orders/order.service.js";
 export class PaymentController {
     constructor() {
         // ... existing methods ...
         this.generateQR = async (req, res) => {
-            const { amount, merchantId, merchantName, merchantCity, currency, orderId } = req.body;
+            const { orderId, merchantId, merchantName, merchantCity, currency } = req.body;
+            const order = await orderService.findById(orderId);
+            const amount = Number(order.totalAmount);
             const qrData = await BakongQRService.generatePaymentQR({
                 amount,
                 merchantId,
@@ -19,7 +22,9 @@ export class PaymentController {
             return apiResponse(res, 200, ResponseMessage.FETCHED, qrData);
         };
         this.generateQRImage = async (req, res) => {
-            const { amount, merchantId, merchantName, merchantCity, currency, orderId } = req.body;
+            const { orderId, merchantId, merchantName, merchantCity, currency } = req.body;
+            const order = await orderService.findById(orderId);
+            const amount = Number(order.totalAmount);
             const qrData = await BakongQRService.generatePaymentQR({
                 amount,
                 merchantId,
@@ -35,8 +40,10 @@ export class PaymentController {
             return res.status(200).send(imageBuffer);
         };
         this.checkTransaction = async (req, res) => {
-            const result = await BakongQRService.checkTransactionByMd5(req.body.md5);
-            return apiResponse(res, 200, ResponseMessage.FETCHED, result);
+            const { orderId, md5 } = req.body;
+            const bakongResult = await BakongQRService.checkTransactionByMd5(md5);
+            const finalized = await paymentService.finalizeFromBakongCheck(orderId, md5, bakongResult);
+            return apiResponse(res, 200, ResponseMessage.FETCHED, finalized);
         };
         this.findAll = async (req, res) => {
             const pagination = getPagination(req);
