@@ -1,0 +1,67 @@
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { jwtConfig } from "../../config/jwt.config.js";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { AppError } from "../errors/app-error.js";
+import { isTokenBlocked } from "../utils/token-blocklist.js";
+
+interface JwtPayload extends jwt.JwtPayload {
+  sub: string;
+  email: string;
+  role: string;
+}
+
+export const authMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  const header = req.headers.authorization;
+
+  if (!header?.startsWith("Bearer ")) {
+    return next(new AppError(401, ResponseMessage.UNAUTHORIZED));
+  }
+
+  try {
+    const token = header.slice("Bearer ".length);
+    if (isTokenBlocked(token)) {
+      return next(new AppError(401, ResponseMessage.UNAUTHORIZED));
+    }
+
+    const payload = jwt.verify(token, jwtConfig.secret) as JwtPayload;
+    req.user = {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role
+    };
+    req.authToken = token;
+    req.authTokenExpiresAt = payload.exp ? payload.exp * 1000 : undefined;
+    return next();
+  } catch {
+    return next(new AppError(401, ResponseMessage.UNAUTHORIZED));
+  }
+};
+
+export const optionalAuthMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  const header = req.headers.authorization;
+
+  if (!header?.startsWith("Bearer ")) {
+    return next();
+  }
+
+  try {
+    const token = header.slice("Bearer ".length);
+    if (isTokenBlocked(token)) {
+      return next();
+    }
+
+    const payload = jwt.verify(token, jwtConfig.secret) as JwtPayload;
+    req.user = {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role
+    };
+    req.authToken = token;
+    req.authTokenExpiresAt = payload.exp ? payload.exp * 1000 : undefined;
+  } catch {
+    // Logout is idempotent: expired or malformed tokens are treated as already logged out.
+  }
+
+  return next();
+};
