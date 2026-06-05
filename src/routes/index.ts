@@ -23,5 +23,4 @@ router.use("/products", productRoutes);
 router.use("/users", userRoutes);
 router.use('/suppliers', supplierRoutes);
 router.use("/inventory", inventoryRoutes);
-router.use("/dashboard", dashboardRoutes);
 export default router;
