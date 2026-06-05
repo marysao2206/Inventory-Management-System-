@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResponseMessage = void 0;
-exports.ResponseMessage = {
+export const ResponseMessage = {
     CREATED: "Resource created successfully",
     UPDATED: "Resource updated successfully",
     DELETED: "Resource deleted successfully",

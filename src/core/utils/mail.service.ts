@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { env } from "../../config/env.config";
+import { env } from "../../config/env.config.js";
 
 export class MailService {
   private get isConfigured() {

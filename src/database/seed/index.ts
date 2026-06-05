@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import { env } from "../../config/env.config";
-import { RoleName } from "../../constants/roles.constant";
-import { AppDataSource } from "../data-source";
-import { roleRepository, authUserRepository } from "../../modules/auth/auth.repository";
+import { env } from "../../config/env.config.js";
+import { RoleName } from "../../constants/roles.constant.js";
+import { AppDataSource } from "../data-source.js";
+import { roleRepository, authUserRepository } from "../../modules/auth/auth.repository.js";
 
 const seed = async () => {
   await AppDataSource.initialize();

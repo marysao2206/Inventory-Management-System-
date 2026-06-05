@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,71 +7,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
-const typeorm_1 = require("typeorm");
-const auth_entity_1 = require("../auth/auth.entity");
-const activity_log_entity_1 = require("../auth/activity-log.entity");
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "../auth/auth.entity.js";
+import { ActivityLog } from "../auth/activity-log.entity.js";
 let User = class User {
 };
-exports.User = User;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)({ type: "bigint" }),
+    PrimaryGeneratedColumn({ type: "bigint" }),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "role_id", type: "bigint", nullable: true }),
+    Column({ name: "role_id", type: "bigint", nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "roleId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "full_name", type: "varchar", length: 150, nullable: true }),
+    Column({ name: "full_name", type: "varchar", length: 150, nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "fullName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 150, nullable: true }),
+    Column({ type: "varchar", length: 150, nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255, nullable: true }),
+    Column({ type: "varchar", length: 255, nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 20, unique: true, nullable: true }),
+    Column({ type: "varchar", length: 20, unique: true, nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "phone", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
+    Column({ type: "boolean", nullable: true }),
     __metadata("design:type", Boolean)
 ], User.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "email_verified", type: "boolean", default: false }),
+    Column({ name: "email_verified", type: "boolean", default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "emailVerified", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "email_verification_code_hash", type: "varchar", length: 255, nullable: true }),
+    Column({ name: "email_verification_code_hash", type: "varchar", length: 255, nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "emailVerificationCodeHash", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "email_verification_expires_at", type: "timestamp", nullable: true }),
+    Column({ name: "email_verification_expires_at", type: "timestamp", nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "emailVerificationExpiresAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "email_verified_at", type: "timestamp", nullable: true }),
+    Column({ name: "email_verified_at", type: "timestamp", nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "emailVerifiedAt", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: "created_at", type: "timestamp" }),
+    CreateDateColumn({ name: "created_at", type: "timestamp" }),
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => auth_entity_1.Role, (role) => role.users, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: "role_id" }),
-    __metadata("design:type", auth_entity_1.Role)
+    ManyToOne(() => Role, (role) => role.users, { eager: true }),
+    JoinColumn({ name: "role_id" }),
+    __metadata("design:type", Role)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => activity_log_entity_1.ActivityLog, (activityLog) => activityLog.user),
+    OneToMany(() => ActivityLog, (activityLog) => activityLog.user),
     __metadata("design:type", Array)
 ], User.prototype, "activityLogs", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)("users")
+User = __decorate([
+    Entity("users")
 ], User);
+export { User };

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { apiResponse } from "../../core/utils/api-response";
-import { authService } from "./auth.service";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { apiResponse } from "../../core/utils/api-response.js";
+import { authService } from "./auth.service.js";
 
 export class AuthController {
   register = async (req: Request, res: Response) => {
@@ -15,8 +15,8 @@ export class AuthController {
   };
 
   logout = async (req: Request, res: Response) => {
-    const data = await authService.logout(req.user!.id, req.authToken!, req.authTokenExpiresAt, req.ip);
-    return apiResponse(res, 200, "Logout successful", data);
+    const data = await authService.logout(req.user?.id, req.authToken, req.authTokenExpiresAt, req.ip);
+    return apiResponse(res, 200, data.message, data);
   };
 
   verifyEmail = async (req: Request, res: Response) => {

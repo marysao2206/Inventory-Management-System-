@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
-import { env } from "../../config/env.config";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { AppError } from "../errors/app-error";
+import { env } from "../../config/env.config.js";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { AppError } from "../errors/app-error.js";
 
 export const notFoundMiddleware = (req: Request, _res: Response, next: NextFunction) => {
   next(new AppError(404, `Route not found: ${req.method} ${req.originalUrl}`));

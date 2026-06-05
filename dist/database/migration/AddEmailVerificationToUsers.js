@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddEmailVerificationToUsers1711000004000 = void 0;
-class AddEmailVerificationToUsers1711000004000 {
+export class AddEmailVerificationToUsers1711000004000 {
     constructor() {
         this.name = "AddEmailVerificationToUsers1711000004000";
     }
@@ -24,4 +21,3 @@ class AddEmailVerificationToUsers1711000004000 {
     `);
     }
 }
-exports.AddEmailVerificationToUsers1711000004000 = AddEmailVerificationToUsers1711000004000;

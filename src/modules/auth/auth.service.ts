@@ -1,14 +1,14 @@
 import bcrypt from "bcryptjs";
 import { randomInt } from "crypto";
 import jwt from "jsonwebtoken";
-import { env } from "../../config/env.config";
-import { jwtConfig } from "../../config/jwt.config";
-import { RoleName } from "../../constants/roles.constant";
-import { AppError } from "../../core/errors/app-error";
-import { mailService } from "../../core/utils/mail.service";
-import { blockToken } from "../../core/utils/token-blocklist";
-import { LoginDto, RegisterDto, ResendVerificationDto, VerifyEmailDto } from "./auth.dto";
-import { activityLogRepository, authUserRepository, roleRepository } from "./auth.repository";
+import { env } from "../../config/env.config.js";
+import { jwtConfig } from "../../config/jwt.config.js";
+import { RoleName } from "../../constants/roles.constant.js";
+import { AppError } from "../../core/errors/app-error.js";
+import { mailService } from "../../core/utils/mail.service.js";
+import { blockToken } from "../../core/utils/token-blocklist.js";
+import { LoginDto, RegisterDto, ResendVerificationDto, VerifyEmailDto } from "./auth.dto.js";
+import { activityLogRepository, authUserRepository, roleRepository } from "./auth.repository.js";
 
 const VERIFICATION_TTL_MINUTES = 10;
 
@@ -83,12 +83,23 @@ export class AuthService {
     return this.toAuthResponse(user);
   }
 
-  async logout(userId: string, token: string, tokenExpiresAt?: number, ipAddress?: string) {
-    blockToken(token, tokenExpiresAt ?? Date.now() + 24 * 60 * 60 * 1000);
-    await this.logActivity(userId, "logged out", ipAddress);
+  async logout(userId?: string, token?: string, tokenExpiresAt?: number, ipAddress?: string) {
+    if (!token) {
+      return {
+        message: "You are already logged out"
+      };
+    }
+
+    if (token) {
+      blockToken(token, tokenExpiresAt ?? Date.now() + 24 * 60 * 60 * 1000);
+    }
+
+    if (userId) {
+      await this.logActivity(userId, "logged out", ipAddress);
+    }
 
     return {
-      message: "Logout successful"
+      message: "You have been successfully logged out."
     };
   }
 

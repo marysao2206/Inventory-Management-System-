@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateSku = void 0;
-const generateSku = (name) => {
+export const generateSku = (name) => {
     const prefix = name
         .replace(/[^a-zA-Z0-9 ]/g, "")
         .split(" ")
@@ -11,4 +8,3 @@ const generateSku = (name) => {
         .join("-");
     return `${prefix || "SKU"}-${Date.now().toString(36).toUpperCase()}`;
 };
-exports.generateSku = generateSku;

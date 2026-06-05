@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { ResponseMessage } from "../../constants/response-message.constant";
-import { apiResponse } from "../../core/utils/api-response";
-import { getPagination, paginationMeta } from "../../core/utils/pagination";
-import { userService } from "./user.service";
+import { ResponseMessage } from "../../constants/response-message.constant.js";
+import { apiResponse } from "../../core/utils/api-response.js";
+import { getPagination, paginationMeta } from "../../core/utils/pagination.js";
+import { userService } from "./user.service.js";
 
 export class UserController {
   findAll = async (req: Request, res: Response) => {

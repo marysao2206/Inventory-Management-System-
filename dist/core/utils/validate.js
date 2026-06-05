@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.validate = void 0;
-const validate = (schema) => (req, _res, next) => {
+export const validate = (schema) => (req, _res, next) => {
     const parsed = schema.parse({
         body: req.body,
         params: req.params,
@@ -12,4 +9,3 @@ const validate = (schema) => (req, _res, next) => {
     req.query = parsed.query ?? req.query;
     next();
 };
-exports.validate = validate;

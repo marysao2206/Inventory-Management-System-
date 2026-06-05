@@ -1,11 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.env = void 0;
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+import dotenv from "dotenv";
+dotenv.config();
 const toNumber = (value, fallback) => {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : fallback;
@@ -15,7 +9,7 @@ const toBoolean = (value, fallback = false) => {
         return fallback;
     return ["true", "1", "yes"].includes(value.toLowerCase());
 };
-exports.env = {
+export const env = {
     nodeEnv: process.env.NODE_ENV ?? "development",
     port: toNumber(process.env.PORT, 3000),
     apiPrefix: process.env.API_PREFIX ?? "/api/v1",
@@ -42,5 +36,15 @@ exports.env = {
         user: process.env.MAIL_USER ?? "",
         password: process.env.MAIL_PASSWORD ?? "",
         from: process.env.MAIL_FROM ?? process.env.MAIL_USER ?? ""
+    },
+    bakong: {
+        apiBaseUrl: process.env.BAKONG_API_BASE_URL ?? "https://api-bakong.nbc.gov.kh",
+        accountCheckUrl: process.env.BAKONG_ACCOUNT_CHECK_URL ?? "https://api-bakong.nbc.gov.kh/v1/check_bakong_account",
+        apiToken: process.env.BAKONG_API_TOKEN ?? "",
+        merchantId: process.env.BAKONG_MERCHANT_ID ?? "",
+        merchantName: process.env.BAKONG_MERCHANT_NAME ?? "My Store",
+        merchantCity: process.env.BAKONG_MERCHANT_CITY ?? "Phnom Penh",
+        currency: process.env.BAKONG_CURRENCY ?? "KHR",
+        expirationSeconds: toNumber(process.env.BAKONG_EXPIRATION_SECONDS, 900)
     }
 };

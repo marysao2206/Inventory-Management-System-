@@ -1,0 +1,16 @@
+import { Router } from "express";
+import { Permission } from "../../constants/roles.constant.js";
+import { authMiddleware } from "../../core/middlewares/auth.middleware.js";
+import { permissionMiddleware } from "../../core/middlewares/rbac.middleware.js";
+import { asyncHandler } from "../../core/utils/async-handler.js";
+import { validate } from "../../core/utils/validate.js";
+import { orderController } from "./order.controller.js";
+import { createOrderSchema, updateOrderSchema } from "./order.dto.js";
+const router = Router();
+router.use(authMiddleware);
+router.get("/", permissionMiddleware(Permission.ORDERS_READ), asyncHandler(orderController.findAll));
+router.get("/:id", permissionMiddleware(Permission.ORDERS_READ), asyncHandler(orderController.findById));
+router.post("/", permissionMiddleware(Permission.ORDERS_CREATE), validate(createOrderSchema), asyncHandler(orderController.create));
+router.patch("/:id", permissionMiddleware(Permission.ORDERS_UPDATE), validate(updateOrderSchema), asyncHandler(orderController.update));
+router.delete("/:id", permissionMiddleware(Permission.ORDERS_DELETE), asyncHandler(orderController.remove));
+export default router;

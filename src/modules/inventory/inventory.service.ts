@@ -1,26 +1,37 @@
-import type { CreateInventoryDto, UpdateInventoryDto } from './inventory.dro.js';
-import type { InventoryItem } from './inventory.entity.js';
-import { inventoryRepository } from './inventory.repository.js';
+import type { CreateInventoryDto, ReceiveStockDto, UpdateInventoryDto } from "./inventory.dto.js";
+import { inventoryRepository } from "./inventory.repository.js";
 
 class InventoryService {
-  list(): InventoryItem[] {
-    return inventoryRepository.list();
+  listItems() {
+    return inventoryRepository.listItems();
   }
 
-  getById(id: number): InventoryItem | null {
-    return inventoryRepository.findById(id);
+  getItemById(id: string) {
+    return inventoryRepository.findItemById(id);
   }
 
-  create(payload: CreateInventoryDto): InventoryItem {
-    return inventoryRepository.create(payload);
+  createItem(payload: CreateInventoryDto, userId?: string) {
+    return inventoryRepository.createItem(payload, userId);
   }
 
-  update(id: number, payload: UpdateInventoryDto): InventoryItem | null {
-    return inventoryRepository.update(id, payload);
+  updateItem(id: string, payload: UpdateInventoryDto, userId?: string) {
+    return inventoryRepository.updateItem(id, payload, userId);
   }
 
-  remove(id: number): boolean {
-    return inventoryRepository.remove(id);
+  removeItem(id: string, userId?: string) {
+    return inventoryRepository.removeItem(id, userId);
+  }
+
+  listLogs() {
+    return inventoryRepository.listLogs();
+  }
+
+  listStocks() {
+    return inventoryRepository.listStocks();
+  }
+
+  receiveStock(payload: ReceiveStockDto, userId?: string) {
+    return inventoryRepository.receiveStock(payload, userId);
   }
 }
 
